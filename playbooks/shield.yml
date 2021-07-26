@@ -4,7 +4,7 @@
   hosts: local
   become: true
   vars_files:
-    - vars/shield.yml
+    - ../vars/shield.yml
 
   tasks:
   - name: install apt latest packages
