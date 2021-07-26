@@ -1,0 +1,22 @@
+---
+
+- name: 
+  hosts: local
+  become: true
+  vars_files:
+    - vars/shield.yml
+
+  tasks:
+  - name: install apt latest packages
+    apt: name={{ item }} state=latest update_cache=yes
+    loop: [ 'git', 'npm', 'nodejs', 'sshuttle' ]
+
+  - name: install snap classic packages
+    snap: name={{ item }} classic=yes
+    loop: [ 'intellij-idea-community', 'datagrip', 'slack', 'code' ]
+
+  - name: install teams
+    snap:
+      name: teams
+
+...
