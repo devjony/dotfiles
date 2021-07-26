@@ -25,14 +25,14 @@ $EDITOR vars/$TEAM_NAME.yml
 
 ## Test the playbook
 ```bash
-ansible-playbook -i inventory $TEAM_NAME.yml --check
+ansible-playbook -i inventory playbooks/$TEAM_NAME.yml --check
 ```
 
 ## Run the playbook
 ```bash
 ansible-playbook \
 -u $(whoami) \
--i inventory $TEAM_NAME.yml
+-i inventory playbooks/$TEAM_NAME.yml
 ```
 
 ## License
