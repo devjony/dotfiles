@@ -15,23 +15,24 @@ sudo ufw allow ssh && \
 ```bash
 git clone https://github.com/devjony/dotfiles.git && \
   cd dotfiles && \
-  git checkout shield
+  git checkout pags
 ```
 
+## Edit the variables accordingly
 ```bash
-# Edit the variables accordingly
 $EDITOR vars/$TEAM_NAME.yml
-$EDITOR ansible.cfg
 ```
 
 ## Test the playbook
 ```bash
-ansible-playbook -i inventory shield.yml --check
+ansible-playbook -i inventory $TEAM_NAME.yml --check
 ```
 
 ## Run the playbook
 ```bash
-ansible-playbook -i inventory shield.yml
+ansible-playbook \
+-u $(whoami) \
+-i inventory $TEAM_NAME.yml
 ```
 
 ## License
