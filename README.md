@@ -4,11 +4,7 @@ This repository contains the ansible playbook files to setup a shield's team wor
 ## Requirements
 ```bash
 sudo apt update && \
-  sudo apt install openssh-server sshpass ansible && \
-  eval $(ssh-agent)
-
-sudo ufw allow ssh && \
-  sudo ufw enable
+  sudo apt install git python3-apt ansible
 ```
 
 ## Run Locally
@@ -31,7 +27,6 @@ ansible-playbook -i inventory playbooks/$TEAM_NAME.yml --check
 ## Run the playbook
 ```bash
 ansible-playbook \
--u $(whoami) \
 -i inventory \ 
 playbooks/$TEAM_NAME.yml
 ```
