@@ -17,17 +17,27 @@
   - name: install apt latest packages
     become: yes
     apt: name={{ item }} state=latest
-    loop: [ 'npm', 'nodejs', 'sshuttle' ]
+    loop:
+      - npm
+      - nodejs
+      - sshuttle
 
   - name: install snap classic packages
     become: yes
     snap: name={{ item }} classic=yes
-    loop: [ 'intellij-idea-community', 'datagrip', 'slack', 'code' ]
+    loop: 
+      - intellij-idea-community
+      - datagrip
+      - slack
+      - code
 
   - name: install docker
     become: yes
     apt: name={{ item }} state=latest
-    loop: [ 'docker-ce', 'docker-ce-cli', 'containerd.io' ]
+    loop:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
 
   - name: install teams
     become: yes
