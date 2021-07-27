@@ -32,7 +32,8 @@ ansible-playbook -i inventory playbooks/$TEAM_NAME.yml --check
 ```bash
 ansible-playbook \
 -u $(whoami) \
--i inventory playbooks/$TEAM_NAME.yml
+-i inventory \ 
+playbooks/$TEAM_NAME.yml
 ```
 
 ## License
