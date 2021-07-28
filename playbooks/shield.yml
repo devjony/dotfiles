@@ -4,7 +4,7 @@
   hosts: local
   become: true
   vars_files:
-    - ../vars/shield.yml
+    - ../vars/user.yml
 
   tasks:
   - name: update all packages
@@ -22,14 +22,21 @@
       - nodejs
       - sshuttle
 
-  - name: install snap classic packages
+  - name: get vscode
     become: yes
-    snap: name={{ item }} classic=yes
-    loop: 
-      - intellij-idea-community
-      - datagrip
-      - slack
-      - code
+    get_url:
+      url: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
+      dest: "/home/{{ user_name }}/Downloads/vscode.deb"
+
+  - name: install vscode
+    become: yes
+    apt:
+      deb: "/home/{{ user_name }}/Downloads/vscode.deb"
+
+  - name: install teams
+    become: yes
+    snap:
+      name: teams
 
   - name: install docker
     become: yes
@@ -39,9 +46,15 @@
       - docker-ce-cli
       - containerd.io
 
-  - name: install teams
+  - name: get docker-compose
     become: yes
-    snap:
-      name: teams
+    shell: curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    warn: false
+
+  - name: apply executable permisions on docker-compose
+    become: yes
+    file:
+      path: /usr/local/bin/docker-compose
+      mode: '555'
 
 ...
