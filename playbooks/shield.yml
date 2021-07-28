@@ -49,7 +49,8 @@
   - name: get docker-compose
     become: yes
     shell: curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-    warn: false
+    args:
+      warn: no
 
   - name: apply executable permisions on docker-compose
     become: yes
