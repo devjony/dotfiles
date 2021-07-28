@@ -33,11 +33,6 @@
     apt:
       deb: "/home/{{ user_name }}/Downloads/vscode.deb"
 
-  - name: install teams
-    become: yes
-    snap:
-      name: teams
-
   - name: install docker
     become: yes
     apt: name={{ item }} state=latest
