@@ -53,4 +53,17 @@
       path: /usr/local/bin/docker-compose
       mode: '555'
 
+  - name: create docker group
+    become: yes
+    ignore_errors: yes
+    shell: groupadd docker
+    args:
+      warn: no
+
+  - name: add user_name to docker group
+    become: yes
+    shell: usermod -aG docker {{ user_name }}
+    args:
+      warn: no
+
 ...
