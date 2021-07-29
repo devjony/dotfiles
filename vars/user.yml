@@ -1,1 +1,4 @@
 user_name: jmicael
+sdkman_script_install_url: http://get.sdkman.io
+user_home_path: '/home/jmicael'
+sdkman_folder: '/home/jmicael/.sdkman'
