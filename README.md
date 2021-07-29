@@ -4,7 +4,7 @@ This repository contains the ansible playbook files to setup a shield's team wor
 ## Requirements
 ```bash
 sudo apt update && \
-  sudo apt install git python3-apt ansible
+  sudo apt install curl git python3-apt ansible -y
 ```
 
 ## Run Locally
