@@ -33,19 +33,26 @@
     apt:
       deb: "/home/{{ user_name }}/Downloads/vscode.deb"
 
+  - name: ensure docker GPG key
+    become: yes
+    apt_key:
+      url: https://download.docker.com/linux/debian/gpg
+      state: present
+
+  - name: ensure docker repository
+    become: yes
+    apt_repository:
+      repo: deb [arch=amd64] https://download.docker.com/linux/debian stretch stable
+      state: present
+
   - name: install docker
     become: yes
-    apt: name={{ item }} state=latest
+    package: name={{ item }} state=present
     loop:
       - docker-ce
       - docker-ce-cli
       - containerd.io
-
-  - name: get docker-compose
-    become: yes
-    shell: curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-    args:
-      warn: no
+      - docker-compose
 
   - name: apply executable permisions on docker-compose
     become: yes
