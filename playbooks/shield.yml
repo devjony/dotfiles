@@ -35,9 +35,9 @@
 
   - name: ensure docker GPG key
     become: yes
-    apt_key:
-      url: https://download.docker.com/linux/debian/gpg
-      state: present
+    shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+    args:
+      warn: no
 
   - name: ensure docker repository
     become: yes
