@@ -66,4 +66,21 @@
     args:
       warn: no
 
+  - name: get sdkman
+    become: yes
+    shell: curl -s "https://get.sdkman.io" | bash && source "$HOME/.sdkman/bin/sdkman-init.sh"
+    args:
+      warn: no
+
+  - name: install sdk java
+    become: yes
+    shell: sdk install java 8.0.292-open
+    args:
+      warn: no
+
+  - name: install sdk maven
+    become: yes
+    shell: sdk install maven
+    args:
+      warn: no
 ...
