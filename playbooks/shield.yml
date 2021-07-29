@@ -63,16 +63,26 @@
       - containerd.io
       - docker-compose
 
-  - name: apply executable permisions on docker-compose
+  - name: apply executable permissions on docker-compose
     become: yes
     file:
       path: /usr/local/bin/docker-compose
       mode: '555'
 
+  - name: check if docker group exists 
+    shell: |
+      if grep -q docker /etc/group
+        then
+          echo "yes"
+        else
+          echo "no"
+        fi
+    register: docker_group_exists
+
   - name: create docker group
     become: yes
-    ignore_errors: yes
     shell: groupadd docker
+    when : docker_group_exists.stdout == "no"
     args:
       warn: no
 
@@ -82,21 +92,26 @@
     args:
       warn: no
 
-  - name: get sdkman
-    become: yes
-    shell: curl -s "https://get.sdkman.io" | bash && source "$HOME/.sdkman/bin/sdkman-init.sh"
+  - name: check if sdkman is installed 
+    shell: test -d '/home/{{ user_name }}/.sdkman' && echo "yes" || echo "no"
+    register: is_sdkman_installed
+
+  - name: install sdkman
+    shell: curl -s {{ sdkman_script_install_url }} | bash executable=/bin/bash
+    when : is_sdkman_installed.stdout == "no"
     args:
       warn: no
 
-  - name: install sdk java
-    become: yes
-    shell: sdk install java 8.0.292-open
-    args:
-      warn: no
+  - name: add sdkman in .bashrc file
+    lineinfile: dest={{ user_home_path }}/.bashrc regexp="\/.sdkman/bin\/sdkman\-init\.sh" line='[[ -s "{{ sdkman_folder }}/bin/sdkman-init.sh" && ! $(which sdkman-init.sh) ]] && source "{{ sdkman_folder }}/bin/sdkman-init.sh"'
 
-  - name: install sdk maven
-    become: yes
-    shell: sdk install maven
+  - name: install java with sdkman
+    shell: source {{ sdkman_folder }}/bin/sdkman-init.sh && sdk install java 8.0.292-open
     args:
-      warn: no
+      executable: /bin/bash
+
+  - name: install gradle with sdkman
+    shell: source {{ sdkman_folder }}/bin/sdkman-init.sh && sdk install gradle
+    args:
+      executable: /bin/bash
 ...
