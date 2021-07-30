@@ -93,7 +93,7 @@
     register: is_sdkman_installed
 
   - name: install sdkman
-    shell: curl -s {{ sdkman_script_install_url }} | bash executable=/bin/bash
+    shell: curl -s {{ sdkman_install_url }} | bash executable=/bin/bash
     when : is_sdkman_installed.stdout == "no"
 
   - name: add sdkman in .bashrc file
