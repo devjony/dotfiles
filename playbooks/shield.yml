@@ -66,7 +66,7 @@
   - name: apply executable permissions on docker-compose
     become: yes
     file:
-      path: /usr/local/bin/docker-compose
+      path: /usr/bin/docker-compose
       mode: '555'
 
   - name: check if docker group exists
@@ -84,22 +84,27 @@
     shell: usermod -aG docker {{ user_name }}
 
   - name: check if sdkman is installed 
+    become: yes
     shell: test -d '/home/{{ user_name }}/.sdkman' && echo "yes" || echo "no"
     register: is_sdkman_installed
 
   - name: install sdkman
+    become: yes
     shell: curl -s {{ sdkman_install_url }} | bash executable=/bin/bash
     when: is_sdkman_installed.stdout == "no"
 
   - name: add sdkman in .bashrc file
+    become: yes
     lineinfile: dest=/home/{{ user_name }}/.bashrc regexp="\/.sdkman/bin\/sdkman\-init\.sh" line='[[ -s "/home/{{ user_name }}/.sdkman/bin/sdkman-init.sh" && ! $(which sdkman-init.sh) ]] && source "/home/{{ user_name }}/.sdkman/bin/sdkman-init.sh"'
 
   - name: install java with sdkman
+    become: yes
     shell: source /home/{{ user_name }}/.sdkman/bin/sdkman-init.sh && sdk install java 8.0.292-open
     args:
       executable: /bin/bash
 
   - name: install gradle with sdkman
+    become: yes
     shell: source /home/{{ user_name }}/.sdkman/bin/sdkman-init.sh && sdk install gradle
     args:
       executable: /bin/bash
