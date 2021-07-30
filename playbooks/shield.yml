@@ -83,14 +83,10 @@
     become: yes
     shell: groupadd docker
     when : docker_group_exists.stdout == "no"
-    args:
-      warn: no
 
   - name: add user_name to docker group
     become: yes
     shell: usermod -aG docker {{ user_name }}
-    args:
-      warn: no
 
   - name: check if sdkman is installed 
     shell: test -d '/home/{{ user_name }}/.sdkman' && echo "yes" || echo "no"
@@ -99,8 +95,6 @@
   - name: install sdkman
     shell: curl -s {{ sdkman_script_install_url }} | bash executable=/bin/bash
     when : is_sdkman_installed.stdout == "no"
-    args:
-      warn: no
 
   - name: add sdkman in .bashrc file
     lineinfile: dest={{ user_home_path }}/.bashrc regexp="\/.sdkman/bin\/sdkman\-init\.sh" line='[[ -s "{{ sdkman_folder }}/bin/sdkman-init.sh" && ! $(which sdkman-init.sh) ]] && source "{{ sdkman_folder }}/bin/sdkman-init.sh"'
