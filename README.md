@@ -16,19 +16,21 @@ git clone https://github.com/devjony/dotfiles.git && \
 
 ## Edit the variables accordingly
 ```bash
-$EDITOR vars/$TEAM_NAME.yml
+$EDITOR vars/user.yml
 ```
 
 ## Test the playbook
 ```bash
-ansible-playbook -i inventory playbooks/$TEAM_NAME.yml --check
+ansible-playbook \
+-i inventory \ 
+playbooks/shield.yml --check
 ```
 
 ## Run the playbook
 ```bash
 ansible-playbook \
 -i inventory \ 
-playbooks/$TEAM_NAME.yml
+playbooks/shield.yml
 ```
 
 ## License
