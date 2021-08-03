@@ -7,13 +7,6 @@
     - ../vars/user.yml
 
   tasks:
-  - name: update all packages
-    become: yes
-    apt:
-      upgrade: dist
-      update_cache: yes
-      cache_valid_time: 3600
-
   - name: install apt latest packages
     become: yes
     apt: name={{ item }} state=latest
@@ -90,7 +83,7 @@
 
   - name: install sdkman
     become: yes
-    shell: curl -s {{ sdkman_install_url }} | bash
+    shell: curl -s {{ sdkman_install_url }} | bash executable=/bin/bash
     when: is_sdkman_installed.stdout == "no"
     args:
       warn: false
