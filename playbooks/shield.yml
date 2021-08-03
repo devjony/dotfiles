@@ -90,7 +90,7 @@
 
   - name: install sdkman
     become: yes
-    shell: curl -s sdkman_install_url | bash
+    shell: curl -s {{ sdkman_install_url }} | bash
     when: is_sdkman_installed.stdout == "no"
     args:
       warn: false
@@ -98,6 +98,9 @@
   - name: update source sdkman
     become: yes
     shell: source "/home/{{ user_name }}/.sdkman/bin/sdkman-init.sh"
+    when: is_sdkman_installed.stdout == "no"
+    args:
+      warn: false
 
   - name: setting java_home
     become: yes
