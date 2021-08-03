@@ -92,6 +92,8 @@
     become: yes
     shell: curl -s sdkman_install_url | bash
     when: is_sdkman_installed.stdout == "no"
+    args:
+      warn: false
 
   - name: update source sdkman
     become: yes
