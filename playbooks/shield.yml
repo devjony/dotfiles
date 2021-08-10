@@ -83,7 +83,7 @@
 
   - name: install sdkman
     become: yes
-    shell: curl -s "https://get.sdkman.io" | bash
+    shell: curl -s {{ sdkman_install_url }} | bash executable=/bin/bash
     when: is_sdkman_installed.stdout == "no"
     args:
       warn: false
