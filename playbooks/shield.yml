@@ -83,7 +83,7 @@
 
   - name: install sdkman
     become: yes
-    shell: curl -s {{ sdkman_install_url }} | bash
+    shell: curl -s "https://get.sdkman.io" | bash
     when: is_sdkman_installed.stdout == "no"
     args:
       warn: false
@@ -102,10 +102,18 @@
 
   - name: install java with sdkman
     become: yes
-    shell: sdk install java 8.0.292-open
+    shell: sdk install java 8.0.292-open | bash
 
   - name: install gradle with sdkman
     become: yes
     shell: sdk install gradle
+  
+  - name: define git username
+    become: yes
+    shell: git config --global user.name {{ git_user_name }}
+
+  - name: define git email
+    become: yes
+    shell: git config --global user.email {{ git_user_email }}
 
 ...
