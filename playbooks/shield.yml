@@ -83,22 +83,21 @@
 
   - name: install sdkman
     become: yes
-    shell: curl -s {{ sdkman_install_url }} | bash executable=/bin/bash
+    shell: curl -s {{ sdkman_install_url }} | bash
     when: is_sdkman_installed.stdout == "no"
     args:
       warn: false
 
   - name: update source sdkman
     become: yes
-    shell: source "/home/{{ user_name }}/.sdkman/bin/sdkman-init.sh"
+    shell: source "/home/{{ user_name }}/.sdkman/bin/sdkman-init.sh" | bash
     when: is_sdkman_installed.stdout == "no"
     args:
-      executable: /bin/bash
       warn: false
 
   - name: setting java_home
     become: yes
-    shell: export JAVA_HOME="/home/{{ user_name }}/.sdkman/candidates/java/current"
+    shell: export JAVA_HOME="/home/{{ user_name }}/.sdkman/candidates/java/current" | bash
 
   - name: install java with sdkman
     become: yes
@@ -106,7 +105,7 @@
 
   - name: install gradle with sdkman
     become: yes
-    shell: sdk install gradle
+    shell: sdk install gradle | bash
   
   - name: define git username
     become: yes
