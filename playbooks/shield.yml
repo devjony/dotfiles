@@ -83,7 +83,7 @@
 
   - name: install sdkman
     become: yes
-    shell: curl -s {{ sdkman_install_url }} | bash executable=/bin/bash
+    shell: curl -s {{ sdkman_install_url }} | bash
     when: is_sdkman_installed.stdout == "no"
     args:
       warn: false
@@ -103,7 +103,7 @@
   - name: install java with sdkman
     become: yes
     shell: sdk install java 8.0.292-open
-  
+
   - name: install gradle with sdkman
     become: yes
     shell: sdk install gradle
