@@ -1,0 +1,11 @@
+---
+- name: main
+  hosts: local
+  become: yes
+  become_user: "{{ user_name }}"
+  vars_files:
+    - vars/user.yml
+  roles:
+    - hogwarts
+
+  tasks:
